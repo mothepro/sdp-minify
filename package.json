@@ -1,0 +1,13 @@
+{
+  "name": "sdp-minify",
+  "version": "0.0.0",
+  "description": "Removes all the fluff from a simple SDP to make it easily transmitted over IRC or SMS",
+  "main": "dist/index.js",
+  "author": "mothepro <4e688d8adf9b8f68774900f9809778ccb7ef857a>",
+  "license": "ISC",
+  "devDependencies": {
+    "@zoltu/typescript-transformer-append-js-extension": "^1.0.1",
+    "ttypescript": "^1.5.8",
+    "typescript": "^3.7.2"
+  }
+}

@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "es2019",
+        "module": "es2015",
+        "outDir": "dist",
+        "sourceMap": true,
+        "strict": true,
+        "declaration": true,
+        "moduleResolution": "node",
+        "lib": ["esnext", "dom"],
+        "plugins": [
+            {
+                "transform": "@zoltu/typescript-transformer-append-js-extension/output/index.js",
+                "after": true
+            }
+        ]
+    }
+}
