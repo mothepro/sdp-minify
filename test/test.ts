@@ -11,7 +11,7 @@ it('should pack a real offer', () => {
 })
 
 it('should unpack a real offer', () => {
-  unpack(expectedPackedOffer).should.eql(unpackedOffer)
+  unpack(expectedPackedOffer).toJSON().should.eql(unpackedOffer)
 })
 
 // TODO add test cases for failures

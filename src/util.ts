@@ -21,3 +21,27 @@ export const strToBytes = (str: string): number[] =>
 
 export const strToByte = (char: string): number =>
       strToBytes(char.substr(0, 1))[0]
+
+/** This only useful for testing on node pretty much... */
+class FakeRTCSessionDescription implements RTCSessionDescription {
+  readonly type: RTCSdpType
+  readonly sdp: string
+
+  constructor({ sdp, type }: RTCSessionDescriptionInit) {
+    this.type = type
+    this.sdp = sdp!
+  }
+
+  toJSON() {
+    return {
+      sdp: this.sdp,
+      type: this.type
+    }
+  }
+}
+
+// Polyfill so it can compile without the SDP object
+export const SDPconstructor: typeof RTCSessionDescription =
+  typeof RTCSessionDescription == 'undefined'
+    ? FakeRTCSessionDescription
+    : RTCSessionDescription

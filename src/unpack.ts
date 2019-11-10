@@ -1,4 +1,4 @@
-import { strToBytes, delimiter, strToByte } from './util'
+import { strToBytes, delimiter, strToByte, SDPconstructor } from './util'
 
 /** Converts the first char of a RTC SDP type to the full value. */
 function sdpType(char: string): RTCSdpType {
@@ -63,8 +63,8 @@ export default function (packed: string) {
       port,
       'typ', 'host', // should be okay, maybe
     ].join(' ')}`)
-  
-  return new RTCSessionDescription({
+
+  return new SDPconstructor({
     type,
     sdp: sdpParts.join('\r\n') + '\r\n'
   })
