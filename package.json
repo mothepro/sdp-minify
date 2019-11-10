@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Removes all the fluff from a simple SDP to make it easily transmitted over IRC or SMS",
   "main": "dist/index.js",
-  "author": "mothepro <4e688d8adf9b8f68774900f9809778ccb7ef857a>",
+  "author": "Maurice Prosper",
   "license": "ISC",
   "scripts": {
     "test": "mocha test/*.ts -r ts-node/register",
