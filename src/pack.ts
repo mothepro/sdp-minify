@@ -10,7 +10,7 @@ import { delimiter, bytesToStr } from './util'
  *  + type (1 byte)
  *  + fingerprint (32 bytes)
  *  + candidate count (1 byte)
- *  + candidates (7 bytes each)
+ *  + candidates (6 bytes each = 4 byte IP + 2 byte port)
  *  + ufrag (unknown)
  *  + delimiter (1 byte)
  *  + pwd (unknown)
@@ -52,11 +52,9 @@ export default function ({ type, sdp }: RTCSessionDescription): string {
       
     case 'a=candidate':
       const [foundation, componentId, transport, priority, connectionAddress, port] = line.split(' ')
-      const ipBytes = connectionAddress.split('.').map(parseInt)
-      if (ipBytes.length == 4) {
-        const portNum = parseInt(port)
-        candidates.push(bytesToStr([...ipBytes, portNum & 0xff0000, portNum & 0x00ff00, portNum & 0x0000ff]))
-      }
+      const ipBytes = connectionAddress.split('.').map(byte => parseInt(byte))
+      if (ipBytes.length == 4)
+        candidates.push(bytesToStr([...ipBytes, parseInt(port) >> 8, parseInt(port) & 0x00ff]))
       break
     }
   }

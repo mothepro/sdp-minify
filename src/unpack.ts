@@ -22,23 +22,17 @@ function sdpType(char: string): RTCSdpType {
  * 
  */
 export default function (packed: string) {
-  let priority = 1
-  const type = sdpType(packed[0]),
+  const type = sdpType(packed.substr(0, 1)),
     fingerprint = strToBytes(packed.slice(1, 33)).map(byte => ('0' + byte.toString(16)).slice(-2)),
-    candidateCount = parseInt(packed[34], 36),
-    [ufrag, password] = packed.substr(35 + candidateCount * 7).split(delimiter),
-    candidates: {ip: string, port: number}[] = []
-  
-  for (let i = 0; i < candidateCount; i++) {
-    const ipBytes = strToBytes(packed.substr(35 + i * 7, 4)),
-      portBytes = strToBytes(packed.substr(35 + i * 7 + 4, 3))
-    candidates.push({
-      ip: ipBytes.join('.'),
-      port: portBytes[0] << 16
-        + portBytes[1] << 8
-        + portBytes[2],
+    candidateCount = parseInt(packed.substr(33, 1), 36),
+    [ufrag, password] = packed.substr(34 + candidateCount * 6).split(delimiter),
+    candidates: { ip: string, port: number }[] = new Array(candidateCount).map((_, i) => {
+      const portBytes = strToBytes(packed.substr(34 + i * 6 + 4, 3))
+      return {
+        ip: strToBytes(packed.substr(34 + i * 6, 4)).join('.'),
+        port: (portBytes[0] << 8) + portBytes[1],
+      }
     })
-  }
 
   const sdpParts = [
     'v=0',
@@ -56,6 +50,7 @@ export default function (packed: string) {
     `a=fingerprint:sha-256 ${fingerprint.join(':').toUpperCase()}`,
   ]
 
+  let priority = 1
   for (const {ip, port} of candidates) {
     sdpParts.push(`a=candidate:${[
       0, // foundation
