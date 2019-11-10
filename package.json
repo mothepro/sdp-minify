@@ -6,6 +6,7 @@
   "license": "ISC",
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
+  "sideEffects": false,
   "files": [
     "dist/*"
   ],
