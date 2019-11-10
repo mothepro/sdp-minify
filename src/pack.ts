@@ -6,6 +6,15 @@ import { delimiter, bytesToStr } from './util'
  * SDP must be version 0.
  * Only candidates with IPv4 are encoded.
  * 
+ * String is broken into:
+ *  + type (1 byte)
+ *  + fingerprint (32 bytes)
+ *  + candidate count (1 byte)
+ *  + candidates (7 bytes each)
+ *  + ufrag (unknown)
+ *  + delimiter (1 byte)
+ *  + pwd (unknown)
+ * 
  * The grammar can be found here
  * @see https://tools.ietf.org/html/rfc5245#section-15.1
  * 
@@ -29,32 +38,32 @@ export default function ({ type, sdp }: RTCSessionDescription): string {
     const [attribute, value] = [line.slice(0, splitter), line.slice(splitter + 1).trim()]
     
     switch (attribute) {
-      case 'a=ice-ufrag':
-        ufrag = value
-        break
+    case 'a=ice-ufrag':
+      ufrag = value
+      break
 
-      case 'a=ice-pwd':
-        pwd = value
-        break
+    case 'a=ice-pwd':
+      pwd = value
+      break
 
-      case 'a=fingerprint':
-        fingerprint = bytesToStr(value.substr('sha-256'.length).trim().split(':').map(byte => parseInt(byte, 16)))
-        break
-        
-      case 'a=candidate':
-        const [foundation, componentId, transport, priority, connectionAddress, port] = line.split(' ')
-        const ipBytes = connectionAddress.split('.').map(parseInt)
-        if (ipBytes.length == 4) {
-          const portNum = parseInt(port)
-          candidates.push(bytesToStr([...ipBytes, portNum & 0xff0000, portNum & 0x00ff00, portNum & 0x0000ff]))
-        }
-        break
+    case 'a=fingerprint':
+      fingerprint = bytesToStr(value.substr('sha-256'.length).trim().split(':').map(byte => parseInt(byte, 16)))
+      break
+      
+    case 'a=candidate':
+      const [foundation, componentId, transport, priority, connectionAddress, port] = line.split(' ')
+      const ipBytes = connectionAddress.split('.').map(parseInt)
+      if (ipBytes.length == 4) {
+        const portNum = parseInt(port)
+        candidates.push(bytesToStr([...ipBytes, portNum & 0xff0000, portNum & 0x00ff00, portNum & 0x0000ff]))
+      }
+      break
     }
   }
 
   return type.charAt(0) +
     fingerprint +
-    bytesToStr(candidates.length)  +
+    candidates.length.toString(36) + // easier than the byte conversion
     candidates +
     ufrag +
     delimiter +
