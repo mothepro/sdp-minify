@@ -12,7 +12,7 @@ function sdpType(char: string): RTCSdpType {
     case 'p':
       return 'pranswer'
   }
-  throw Error(`'${char}' doesn't map to a RTC DSP type.`)
+  throw Error(`'${char}' doesn't map to a RTC SDP type.`)
 }
 
 /** 

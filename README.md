@@ -4,7 +4,7 @@
 
 ## How To Use
 
-Host can create an offer/
+Host can create an offer.
 
 ```typescript
 import {pack} from 'sdp-minify'
@@ -23,7 +23,8 @@ import {pack, unpack} from 'sdp-minify'
 
 const pc = new RTCPeerConnection
 // Setup ...
-pc.setRemoteDescription(unpack(length70ish)) // the received string
+const obj = unpack(length70ish) // the received string
+pc.setRemoteDescription(new RTCSessionDescription(obj))
 const answer = await pc.createAnswer()
 pc.setLocalDescription(answer)
 const length70ish = pack(answer) // send this over IRC, discord, SMS w/e
