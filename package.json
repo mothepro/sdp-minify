@@ -1,12 +1,14 @@
 {
   "name": "sdp-minify",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Maurice Prosper",
   "description": "Removes all the fluff from a simple SDP to make it easily transmitted over IRC or SMS",
   "license": "ISC",
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
-  "files": ["dist/*"],
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
     "test": "mocha test/*.ts -r ts-node/register",
     "build": "ttsc -m es2015 --outDir dist/esm",
