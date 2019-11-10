@@ -1,4 +1,4 @@
-import { strToBytes, delimiter, strToByte, SDPconstructor } from './util'
+import { strToBytes, delimiter, strToByte } from './util'
 
 /** Converts the first char of a RTC SDP type to the full value. */
 function sdpType(char: string): RTCSdpType {
@@ -21,7 +21,7 @@ function sdpType(char: string): RTCSdpType {
  * All candidates are restored as `typ host`
  * 
  */
-export default function (packed: string) {
+export default function (packed: string): RTCSessionDescriptionInit {
   const type = sdpType(packed.substr(0, 1)),
     /** Get 32 bytes for the fingerprint */
     fingerprint = strToBytes(packed.slice(1, 1 + 32)).map(byte => ('0' + byte.toString(16)).slice(-2)),
@@ -64,8 +64,8 @@ export default function (packed: string) {
       'typ', 'host', // should be okay, maybe
     ].join(' ')}`)
 
-  return new SDPconstructor({
+  return {
     type,
     sdp: sdpParts.join('\r\n') + '\r\n'
-  })
+  }
 }

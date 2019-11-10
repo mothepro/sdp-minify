@@ -21,8 +21,8 @@ import { delimiter, bytesToStr } from './util'
  * The explanation on how this works
  * @see https://webrtchacks.com/the-minimum-viable-sdp/
  */
-export default function ({ type, sdp }: RTCSessionDescription): string {
-  if (!sdp.startsWith('v=0'))
+export default function ({ type, sdp }: RTCSessionDescriptionInit): string {
+  if (!sdp || !sdp.startsWith('v=0'))
     throw Error('Provided SDP is not version 0')
   
   let ufrag!: string,

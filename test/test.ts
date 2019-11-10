@@ -7,11 +7,11 @@ import unpackedOffer from './unpackedOffer.json'
 const expectedPackedOffer = 'oƶźðÎď×ŔğŰƖÊƉĿƐáƳŖÔũōãÔüćƛÅÕĄƂĶćŪ1ØÅŌŔƦƼuIEO,/wflRKbnu+vxwmL7kd6N/g14'
 
 it('should pack a real offer', () => {
-  pack(realOffer as RTCSessionDescription).should.eql(expectedPackedOffer)
+  pack(realOffer as RTCSessionDescriptionInit).should.eql(expectedPackedOffer)
 })
 
 it('should unpack a real offer', () => {
-  unpack(expectedPackedOffer).toJSON().should.eql(unpackedOffer)
+  unpack(expectedPackedOffer).should.eql(unpackedOffer)
 })
 
 // TODO add test cases for failures
