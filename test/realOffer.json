@@ -1,0 +1,4 @@
+{
+  "type": "offer",
+  "sdp": "v=0\r\no=- 6136167713777872556 2 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE 0\r\na=msid-semantic: WMS\r\nm=application 59132 UDP/DTLS/SCTP webrtc-datachannel\r\nc=IN IP4 24.5.140.148\r\na=candidate:2138393493 1 udp 2113937151 4c835a32-e955-4b92-9690-2c52068d3b96.local 59132 typ host generation 0 network-cost 999\r\na=candidate:2496871252 1 udp 2113939711 e14deb53-2dc1-48b7-8443-51ce2d947d30.local 59133 typ host generation 0 network-cost 999\r\na=candidate:842163049 1 udp 1677729535 24.5.140.148 59132 typ srflx raddr 0.0.0.0 rport 0 generation 0 network-cost 999\r\na=ice-ufrag:uIEO\r\na=ice-pwd:/wflRKbnu+vxwmL7kd6N/g14\r\na=ice-options:trickle\r\na=fingerprint:sha-256 F6:BA:30:0E:4F:17:94:5F:B0:D6:0A:C9:7F:D0:21:F3:96:14:A9:8D:23:14:3C:47:DB:05:15:44:C2:76:47:AA\r\na=setup:actpass\r\na=mid:0\r\na=sctp-port:5000\r\na=max-message-size:262144\r\n"
+}

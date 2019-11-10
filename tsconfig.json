@@ -1,13 +1,15 @@
 {
     "compilerOptions": {
         "target": "es2019",
-        "module": "es2015",
+        "module": "commonjs",
         "outDir": "dist",
         "sourceMap": true,
         "strict": true,
         "declaration": true,
         "moduleResolution": "node",
         "lib": ["esnext", "dom"],
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
         "plugins": [
             {
                 "transform": "@zoltu/typescript-transformer-append-js-extension/output/index.js",

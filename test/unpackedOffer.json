@@ -1,0 +1,4 @@
+{
+  "type": "offer",
+  "sdp": "v=0\r\no=- 5498186869896684180 2 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=msid-semantic: WMS\r\nm=application 9 DTLS/SCTP 5000\r\nc=IN IP4 0.0.0.0\r\na=mid:data\r\na=sctpmap:5000 webrtc-datachannel 1024\r\na=setup:actpass\r\na=ice-ufrag:uIEO\r\na=ice-pwd:/wflRKbnu+vxwmL7kd6N/g14\r\na=fingerprint:sha-256 F6:BA:30:0E:4F:17:94:5F:B0:D6:0A:C9:7F:D0:21:F3:96:14:A9:8D:23:14:3C:47:DB:05:15:44:C2:76:47:AA\r\na=candidate:0 1 udp 1 24.5.140.148 59132 typ host\r\n"
+}
