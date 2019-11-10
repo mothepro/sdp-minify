@@ -1,4 +1,4 @@
-import { strToBytes, bytesToStr, delimiter } from './util'
+import { strToBytes, delimiter, strToByte } from './util'
 
 /** Converts the first char of a RTC SDP type to the full value. */
 function sdpType(char: string): RTCSdpType {
@@ -23,16 +23,18 @@ function sdpType(char: string): RTCSdpType {
  */
 export default function (packed: string) {
   const type = sdpType(packed.substr(0, 1)),
-    fingerprint = strToBytes(packed.slice(1, 33)).map(byte => ('0' + byte.toString(16)).slice(-2)),
-    candidateCount = parseInt(packed.substr(33, 1), 36),
-    [ufrag, password] = packed.substr(34 + candidateCount * 6).split(delimiter),
-    candidates: { ip: string, port: number }[] = new Array(candidateCount).map((_, i) => {
-      const portBytes = strToBytes(packed.substr(34 + i * 6 + 4, 3))
-      return {
-        ip: strToBytes(packed.substr(34 + i * 6, 4)).join('.'),
-        port: (portBytes[0] << 8) + portBytes[1],
-      }
-    })
+    /** Get 32 bytes for the fingerprint */
+    fingerprint = strToBytes(packed.slice(1, 1 + 32)).map(byte => ('0' + byte.toString(16)).slice(-2)),
+    /** 1 byte for the candidate count */
+    candidateCount = parseInt(packed.substr(1 + 32, 1), 36),
+    /** the candidates are 6 bytes each (4 byte IP + 2 byte port) */
+    candidates = [...Array(candidateCount)].map((_, i) => ({
+      ip: strToBytes(packed.substr(1 + 32 + 1 + i * 6, 4)).join('.'),
+      port: (strToByte(packed.substr(1 + 32 + 1 + i * 6 + 4)) << 8) +
+        strToByte(packed.substr(1 + 32 + 1 + i * 6 + 4 + 1)),
+    })),
+    /** ufrag and password are split with a delimiter */
+    [ufrag, password] = packed.substr(1 + 32 + 1 + candidateCount * 6).split(delimiter)
 
   const sdpParts = [
     'v=0',
@@ -51,7 +53,7 @@ export default function (packed: string) {
   ]
 
   let priority = 1
-  for (const {ip, port} of candidates) {
+  for (const {ip, port} of candidates)
     sdpParts.push(`a=candidate:${[
       0, // foundation
       1, // component id
@@ -59,11 +61,10 @@ export default function (packed: string) {
       priority++,
       ip,
       port,
-      'typ', 'host', // should be okay
+      'typ', 'host', // should be okay, maybe
     ].join(' ')}`)
-  }
   
-  return ({ //new RTCSessionDescription({
+  return new RTCSessionDescription({
     type,
     sdp: sdpParts.join('\r\n') + '\r\n'
   })

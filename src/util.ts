@@ -18,3 +18,6 @@ export const bytesToStr = (bytes: number | number[]): string =>
 /** Convert a 'human friendly' string to an array of bytes. */
 export const strToBytes = (str: string): number[] =>
     str.split('').map(char => char.charCodeAt(0) - charOffset)
+
+export const strToByte = (char: string): number =>
+      strToBytes(char.substr(0, 1))[0]
