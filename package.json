@@ -12,7 +12,9 @@
   ],
   "scripts": {
     "test": "mocha -r ts-node/register -r should test/*.ts",
-    "build": "ttsc -m es2015 --outDir dist/esm",
+    "build:esm": "ttsc -m es2015 --outDir dist/esm",
+    "build:npm": "tsc",
+    "build": "npm run build:npm && npm run build:esm",
     "prerelease": "npm run build",
     "release": "np"
   },
