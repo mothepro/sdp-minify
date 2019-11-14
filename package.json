@@ -11,7 +11,7 @@
     "dist/*"
   ],
   "scripts": {
-    "test": "mocha test/*.ts -r ts-node/register",
+    "test": "mocha -r ts-node/register -r should test/*.ts",
     "build": "ttsc -m es2015 --outDir dist/esm",
     "prerelease": "npm run build",
     "release": "np"
