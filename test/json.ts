@@ -25,12 +25,14 @@ a=sctp-port:5000
 a=max-message-size:262144
 "}`.replace(/\n/g, '\\r\\n')
 
-it('should pack a real offer to JSON', () => {
-  pack(realOffer as RTCSessionDescriptionInit).should.eql(packedOffer)
-})
+describe('JSON encoding', () => {
+  it('should pack a real offer to JSON', () => {
+    pack(realOffer as RTCSessionDescriptionInit).should.eql(packedOffer)
+  })
 
-it('should unpack a real offer from JSON', () => {
-  unpack(packedOffer).should.eql(realOffer)
+  it('should unpack a real offer from JSON', () => {
+    unpack(packedOffer).should.eql(realOffer)
+  })
 })
 
 // TODO add test cases for failures & answers
