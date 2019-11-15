@@ -21,7 +21,7 @@ function sdpType(char: string): RTCSdpType {
  * All candidates are restored as `typ host`
  * 
  */
-export default function (packed: string): RTCSessionDescriptionInit {
+export default function (packed: string): Required<RTCSessionDescriptionInit> {
   const type = sdpType(packed.substr(0, 1)),
     /** Get 32 bytes for the fingerprint */
     fingerprint = strToBytes(packed.slice(1, 1 + 32)).map(byte => ('0' + byte.toString(16)).slice(-2)),
