@@ -26,11 +26,11 @@ a=max-message-size:262144
 "}`.replace(/\n/g, '\\r\\n')
 
 describe('JSON encoding', () => {
-  it('should pack a real offer to JSON', () => {
-    pack(realOffer as RTCSessionDescriptionInit).should.eql(packedOffer)
+  it('should pack a real offer', () => {
+    pack(realOffer as Required<RTCSessionDescriptionInit>).should.eql(packedOffer)
   })
 
-  it('should unpack a real offer from JSON', () => {
+  it('should unpack a real offer', () => {
     unpack(packedOffer).should.eql(realOffer)
   })
 })

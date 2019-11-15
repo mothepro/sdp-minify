@@ -9,4 +9,7 @@ declare const enum Level {
 
   /** Gets the important values from the SDP and packes it into a string to be C&P. */
   UTF16,
+
+  /** A BASE64 encoding of the entire SDP */
+  BASE64,
 }

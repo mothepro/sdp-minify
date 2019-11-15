@@ -1,6 +1,7 @@
 import Level from './level'
 import jsonPack from './json/pack'
 import utf16Pack from './utf16/pack'
+import base64Pack from './base64/pack'
 
 /** Packs an SDP stringable format. */
 export default function ({ type, sdp }: RTCSessionDescriptionInit, level = Level.RAW): string {
@@ -14,6 +15,9 @@ export default function ({ type, sdp }: RTCSessionDescriptionInit, level = Level
 
     case Level.UTF16:
       return utf16Pack({ type, sdp })
+    
+    case Level.BASE64:
+      return base64Pack({ type, sdp })
   }
 
   throw TypeError('Unreachable')
